@@ -10,6 +10,9 @@ home_header_contact_option_xpath = "//a[@href='https://practicetestautomation.co
 #LOGIN ELEMENTS
 title_page_xpath = "//h2[contains(text(), 'Test login')]"
 username_input = "//input[contains(@name,'username')]"
-username=" student"
+username="student"
 password_input = "//input[contains(@name,'password')]"
 password="Password123"
+login_button_xpath = "//button[@id='submit' and @class='btn']"
+congrats_message_xpath = "//h1[@class='post-title'][contains(.,'Logged In Successfully')]"
+logout_button_xpath = "//a[contains(@class, 'wp-block-button__link') and contains(text(), 'Log out')]"
