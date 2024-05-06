@@ -25,9 +25,9 @@ class LoginView:
     def click_login_button(self, login_button_xpath):
         login_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, login_button_xpath)))
         login_button.click()
-    def click_logout_button(self, logout_button_xpath):
+    def click_logout_button(self, login_button_xpath):
         time.sleep(1)
-        logout_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, logout_button_xpath)))
+        logout_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, login_button_xpath)))
         logout_button.click()
         
     def verify_login_successful(self):
