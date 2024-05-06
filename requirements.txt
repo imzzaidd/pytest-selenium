@@ -1,0 +1,5 @@
+# Dependencias comunes
+selenium==4.20.0
+pytest==8.0.2
+
+
