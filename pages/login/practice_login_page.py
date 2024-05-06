@@ -8,7 +8,7 @@ import time
 class LoginView:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 50)
+        self.wait = WebDriverWait(self.driver, 10)
 
     def fill_username_input(self, username, username_input):
         time.sleep(1)
