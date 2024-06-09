@@ -1,5 +1,5 @@
 import pytest
-from pages.login.practice_login_page import LoginView
+from pages.login.login_page import LoginView
 import os
 from dotenv import load_dotenv
 
