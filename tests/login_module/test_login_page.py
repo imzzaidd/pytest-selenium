@@ -1,47 +1,42 @@
 import pytest
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from pages.login.practice_login_page import LoginView
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from tests.config import  username_input, username, password_input, password, login_button_xpath, logout_button_xpath
+from dotenv import load_dotenv
+import os
 
-@pytest.fixture(scope="session")
-def browser():
-    options = FirefoxOptions()
-    options.headless = True
-    options.add_argument('--disable-gpu')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1920,1080')
+load_dotenv()
 
-    # Use RemoteWebDriver instead of webdriver.Firefox
-    driver = RemoteWebDriver(
-        command_executor='http://localhost:4444/wd/hub',
-        options=options
-    )
-    yield driver
-    driver.quit()
-def test_login_success(browser):
-    login_page_view = LoginView(browser)
-    login_page_view.login_successfully(username_input, username, password_input, password, login_button_xpath)
-    verification_results = []
-    verification_results.append(login_page_view.verify_login_successful())
-    for i, result in enumerate(verification_results, start=1):
-        if result:
-            print(f"Verification {i}: Success")
-        else:
-            print(f"Verification {i}: Error")
-    assert all(verification_results), "Test failed: One or more elements could not be verified correctly."
+@pytest.mark.usefixtures("browser")
+class TestLogin:
+    def test_login_success(self, browser):
+        login_page_view = LoginView(browser)
+        username = os.getenv('USERNAME')
+        password = os.getenv('PASSWORD')
+        username_input = os.getenv('USERNAME_INPUT_XPATH')
+        password_input = os.getenv('PASSWORD_INPUT_XPATH')
+        login_button_xpath = os.getenv('LOGIN_BUTTON_XPATH')
 
-def test_logout_success(browser):
-    login_page_view = LoginView(browser)
-    login_page_view.logout_successfully(username_input, username, password_input, password, login_button_xpath, logout_button_xpath)
-    verification_results = []
-    verification_results.append(login_page_view.verify_logout_sucessful())  # Corrected method name
-    for i, result in enumerate(verification_results, start=1):
-        if result:
-            print(f"Verification {i}: Success")
-        else:
-            print(f"Verification {i}: Error")
-    assert all(verification_results), "Test failed: One or more elements could not be verified correctly."
+        assert username is not None, "USERNAME no se cargó correctamente desde el archivo .env"
+        assert password is not None, "PASSWORD no se cargó correctamente desde el archivo .env"
+        assert username_input is not None, "USERNAME_INPUT_XPATH no se cargó correctamente desde el archivo .env"
+        assert password_input is not None, "PASSWORD_INPUT_XPATH no se cargó correctamente desde el archivo .env"
+        assert login_button_xpath is not None, "LOGIN_BUTTON_XPATH no se cargó correctamente desde el archivo .env"
+
+        assert login_page_view.login_successfully(username_input, username, password_input, password, login_button_xpath)
+
+    def test_logout_success(self, browser):
+        login_page_view = LoginView(browser)
+        username = os.getenv('USERNAME')
+        password = os.getenv('PASSWORD')
+        username_input = os.getenv('USERNAME_INPUT_XPATH')
+        password_input = os.getenv('PASSWORD_INPUT_XPATH')
+        login_button_xpath = os.getenv('LOGIN_BUTTON_XPATH')
+        logout_button_xpath = os.getenv('LOGOUT_BUTTON_XPATH')
+
+        assert username is not None, "USERNAME no se cargó correctamente desde el archivo .env"
+        assert password is not None, "PASSWORD no se cargó correctamente desde el archivo .env"
+        assert username_input is not None, "USERNAME_INPUT_XPATH no se cargó correctamente desde el archivo .env"
+        assert password_input is not None, "PASSWORD_INPUT_XPATH no se cargó correctamente desde el archivo .env"
+        assert login_button_xpath is not None, "LOGIN_BUTTON_XPATH no se cargó correctamente desde el archivo .env"
+        assert logout_button_xpath is not None, "LOGOUT_BUTTON_XPATH no se cargó correctamente desde el archivo .env"
+
+        assert login_page_view.logout_successfully(username_input, username, password_input, password, login_button_xpath, logout_button_xpath)
