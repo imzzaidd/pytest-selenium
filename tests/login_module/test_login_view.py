@@ -1,18 +1,19 @@
 import pytest
 from selenium import webdriver
-from pages.login.login_view import Login2View
+from pages.login.login_view import LoginView
 from config.config import Config
 
-# Fixture to initialize and quit the browser
+'''
 @pytest.fixture(scope="module")
 def browser():
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)
     yield driver
     driver.quit()
+'''
 
 @pytest.mark.usefixtures("browser")
-class TestLogin2:
+class TestLoginView:
 
     """
     Test suite for Login functionality
@@ -22,7 +23,7 @@ class TestLogin2:
         """
         Test del Login con credenciales correctas
         """
-        login_page = Login2View(browser)
+        login_page = LoginView(browser)
         
         username = Config.USERNAME
         password = Config.PASSWORD
@@ -37,7 +38,7 @@ class TestLogin2:
         """
         Test del Login con credenciales incorrectas
         """
-        login_page = Login2View(browser)
+        login_page = LoginView(browser)
         
         invalid_username = Config.INVALID_USERNAME
         invalid_password = Config.INVALID_PASSWORD
@@ -52,7 +53,7 @@ class TestLogin2:
         """
         Test del Login con campos vacíos
         """
-        login_page = Login2View(browser)
+        login_page = LoginView(browser)
         
         empty_username = ""
         empty_password = ""
@@ -64,7 +65,7 @@ class TestLogin2:
         """
         Test del Login con campo de usuario vacío
         """
-        login_page = Login2View(browser)
+        login_page = LoginView(browser)
         
         empty_username = ""
         password = Config.PASSWORD
@@ -76,7 +77,7 @@ class TestLogin2:
         """
         Test del Login con campo de contraseña vacío
         """
-        login_page = Login2View(browser)
+        login_page = LoginView(browser)
         
         username = Config.USERNAME
         empty_password = ""
