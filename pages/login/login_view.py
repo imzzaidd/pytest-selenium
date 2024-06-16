@@ -11,12 +11,11 @@ logger = logging.getLogger(__name__)
 class Login2View:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 10)
+        self.wait = WebDriverWait(self.driver, 15)
 
     def load_page(self):
-        """Load the login page and maximize the window."""
         try:
-            self.driver.get(Config.LOGIN_URL)
+            self.driver.get(Config.LOGIN_SAUCEDEMO_URL)
             self.driver.maximize_window()
             logger.info("Login page loaded successfully.")
         except Exception as e:
@@ -24,7 +23,6 @@ class Login2View:
             raise e
 
     def fill_input(self, xpath, value):
-        """Fill input field located by the given xpath with the specified value."""
         try:
             input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
             input_field.clear()
@@ -38,7 +36,6 @@ class Login2View:
             raise e
 
     def click_element(self, xpath):
-        """Click the element located by the given xpath."""
         try:
             element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
             element.click()
@@ -51,7 +48,6 @@ class Login2View:
             raise e
 
     def is_element_visible(self, xpath):
-        """Check if the element located by the given xpath is visible."""
         try:
             self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
             logger.info(f"Element {xpath} is visible.")
@@ -66,10 +62,37 @@ class Login2View:
             logger.error(f"Error checking visibility of element {xpath}.", exc_info=True)
             raise e
 
-    def login(self, username, password):
-        """Perform the login action and verify success."""
+    def login_success(self, username, password):
         self.load_page()
         self.fill_input(Config.USERNAME_INPUT_XPATH, username)
         self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
         self.click_element(Config.SUBMIT_BUTTON_XPATH)
         return self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
+    
+    def login_failure(self, invalid_username, invalid_password):
+        self.load_page()
+        self.fill_input(Config.USERNAME_INPUT_XPATH, invalid_username)
+        self.fill_input(Config.PASSWORD_INPUT_XPATH, invalid_password)
+        self.click_element(Config.SUBMIT_BUTTON_XPATH)
+        return not self.is_element_visible(Config.INVALID_MESSAGE_XPATH)
+
+    def login_empty_fields(self, empty_username, empty_password):
+        self.load_page()
+        self.fill_input(Config.USERNAME_INPUT_XPATH, empty_username)
+        self.fill_input(Config.PASSWORD_INPUT_XPATH, empty_password)
+        self.click_element(Config.SUBMIT_BUTTON_XPATH)
+        return not self.is_element_visible(Config.EMPTY_MESSAGE_XPATH)
+    
+    def login_empty_username(self, empty_username, password):
+        self.load_page()
+        self.fill_input(Config.USERNAME_INPUT_XPATH, empty_username)
+        self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
+        self.click_element(Config.SUBMIT_BUTTON_XPATH)
+        return not self.is_element_visible(Config.EMPTY_MESSAGE_XPATH)
+    
+    def login_empty_password(self, username, empty_password):
+        self.load_page()
+        self.fill_input(Config.USERNAME_INPUT_XPATH, username)
+        self.fill_input(Config.PASSWORD_INPUT_XPATH, empty_password)
+        self.click_element(Config.SUBMIT_BUTTON_XPATH)
+        return not self.is_element_visible(Config.EMPTY_MESSAGE_XPATH)
