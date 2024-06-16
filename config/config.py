@@ -15,6 +15,9 @@ class Config:
     INVALID_PASSWORD = os.getenv('INVALID_PASSWORD')
     INVALID_MESSAGE_XPATH = os.getenv('INVALID_MESSAGE_XPATH')
     EMPTY_MESSAGE_XPATH= os.getenv('EMPTY_MESSAGE_XPATH')
+    MENU_BUTTON_XPATH = os.getenv('MENU_BUTTON_XPATH')
+    ABOUT_LINK= os.getenv('ABOUT_LINK_XPATH')
+    LOGO_SAUSELABS_XPATH = os.getenv('LOGO_SAUSLABS_XPATH')
 
     @classmethod
     def validate(cls):
@@ -29,12 +32,15 @@ class Config:
             'INVALID_USERNAME': cls.INVALID_USERNAME,
             'INVALID_PASSWORD': cls.INVALID_PASSWORD,
             'ERROR_MESSAGE_XPATH': cls.INVALID_MESSAGE_XPATH,
-            'EMPTY_FIELD_ERROR_MESSAGE_XPATH': cls.EMPTY_MESSAGE_XPATH
+            'EMPTY_FIELD_ERROR_MESSAGE_XPATH': cls.EMPTY_MESSAGE_XPATH,
+            'MENU_BUTTON_XPATH': cls.MENU_BUTTON_XPATH,
+            'ABOUT_LINK_XPATH': cls.ABOUT_LINK,
+            'LOGO_SAUSLABS_XPATH': cls.LOGO_SAUSELABS_XPATH,
+            
         }
 
         for var_name, var_value in variables.items():
             if var_value is None:
                 raise ValueError(f"Environment variable {var_name} is not set.")
 
-# Validate configuration at the import time
 Config.validate()

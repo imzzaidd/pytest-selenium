@@ -8,7 +8,7 @@ from config.config import Config
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class Login2View:
+class InventoryView:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
@@ -16,7 +16,7 @@ class Login2View:
     def load_page(self):
         
         try:
-            self.driver.get(Config.LOGIN_URL2)
+            self.driver.get(Config.LOGIN_SAUCEDEMO_URL)
             self.driver.maximize_window()
             logger.info("Login page cargada con éxito.")
         except Exception as e:
@@ -63,9 +63,15 @@ class Login2View:
             logger.error(f"Error checking visibility of element {xpath}.", exc_info=True)
             raise e
 
-    def login(self, username, password):
+    def index_view(self, username, password):
         self.load_page()
         self.fill_input(Config.USERNAME_INPUT_XPATH, username)
         self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
         self.click_element(Config.SUBMIT_BUTTON_XPATH)
-        return self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
+        self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
+        self.is_element_visible(Config.MENU_BUTTON_XPATH)
+        self.click_element(Config.MENU_BUTTON_XPATH)
+        self.click_element(Config.ABOUT_LINK)
+        self.is_element_visible(Config.LOGO_SAUSELABS_XPATH)
+        
+    
