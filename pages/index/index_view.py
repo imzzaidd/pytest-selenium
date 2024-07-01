@@ -62,6 +62,9 @@ class InventoryView:
         except Exception as e:
             logger.error(f"Error checking visibility of element {xpath}.", exc_info=True)
             raise e
+    def go_back(self):
+        self.driver.back()
+        logger.info("Go back to previous page")
 
     def index_view(self, username, password):
         self.load_page()
@@ -69,9 +72,13 @@ class InventoryView:
         self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
         self.click_element(Config.SUBMIT_BUTTON_XPATH)
         self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
-        self.is_element_visible(Config.MENU_BUTTON_XPATH)
+        
+    def hamburger_menu(self, username, password):
+        self.index_view(username, password) 
         self.click_element(Config.MENU_BUTTON_XPATH)
         self.click_element(Config.ABOUT_LINK)
         self.is_element_visible(Config.LOGO_SAUSELABS_XPATH)
-        
-    
+        self.go_back()
+        self.click_element(Config.MENU_BUTTON_XPATH)
+        self.click_element(Config.LOGOUT_BUTTON_XPATH)
+        self.is_element_visible(Config.LOGO_PAGE_XPATH)

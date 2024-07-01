@@ -19,21 +19,6 @@ class TestLoginView:
     Test suite for Login functionality
     """
 
-    def test_login_success(self, browser):
-        """
-        Test del Login con credenciales correctas
-        """
-        login_page = LoginView(browser)
-        
-        username = Config.USERNAME
-        password = Config.PASSWORD
-        
-        assert username, "USERNAME is not set in the environment variables"
-        assert password, "PASSWORD is not set in the environment variables"
-        
-        assert login_page.login_success(username, password), "Login failed: Unable to login with provided credentials"
-        assert login_page.is_element_visible(Config.PRODUCTS_HEADER_XPATH), "Login verification failed: User is not logged in"
-
     def test_login_failure(self, browser):
         """
         Test del Login con credenciales incorrectas
@@ -84,3 +69,18 @@ class TestLoginView:
 
         login_page.login_empty_password(username, empty_password), "Login should fail with empty password"
         login_page.is_element_visible(Config.EMPTY_MESSAGE_XPATH), "Error message not displayed for empty password"
+
+def test_login_success(browser):
+    """
+    Test del Login con credenciales correctas
+    """
+    login_page = LoginView(browser)
+    
+    username = Config.USERNAME
+    password = Config.PASSWORD
+    
+    assert username, "USERNAME is not set in the environment variables"
+    assert password, "PASSWORD is not set in the environment variables"
+    
+    assert login_page.login_success(username, password), "Login failed: Unable to login with provided credentials"
+    assert login_page.is_element_visible(Config.PRODUCTS_HEADER_XPATH), "Login verification failed: User is not logged in"

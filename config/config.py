@@ -18,6 +18,8 @@ class Config:
     MENU_BUTTON_XPATH = os.getenv('MENU_BUTTON_XPATH')
     ABOUT_LINK= os.getenv('ABOUT_LINK_XPATH')
     LOGO_SAUSELABS_XPATH = os.getenv('LOGO_SAUSLABS_XPATH')
+    LOGOUT_BUTTON_XPATH = os.getenv('LOGOUT_BUTTON_XPATH')
+    LOGO_PAGE_XPATH = os.getenv('LOGO_PAGE_XPATH')
 
     @classmethod
     def validate(cls):
@@ -36,7 +38,8 @@ class Config:
             'MENU_BUTTON_XPATH': cls.MENU_BUTTON_XPATH,
             'ABOUT_LINK_XPATH': cls.ABOUT_LINK,
             'LOGO_SAUSLABS_XPATH': cls.LOGO_SAUSELABS_XPATH,
-            
+            'LOGOUT_BUTTON_XPATH': cls.LOGOUT_BUTTON_XPATH,
+            'LOGO_PAGE_XPATH': cls.LOGO_PAGE_XPATH,
         }
 
         for var_name, var_value in variables.items():
