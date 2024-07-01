@@ -20,6 +20,10 @@ class Config:
     LOGO_SAUSELABS_XPATH = os.getenv('LOGO_SAUSLABS_XPATH')
     LOGOUT_BUTTON_XPATH = os.getenv('LOGOUT_BUTTON_XPATH')
     LOGO_PAGE_XPATH = os.getenv('LOGO_PAGE_XPATH')
+    CLOSE_MENU_BUTTON_XPATH = os.getenv('CLOSE_MENU_BUTTON_XPATH')
+    PRODUCT_SORT_DROPDOWN= os.getenv('PRODUCT_SORT_DROPDOWN_XPATH')
+    ADD_TO_CART_BTN = os.getenv('ADD_TO_CART_BTN_XPATH')
+    NOTIFICATION_1 = os.getenv('NOTIFICATION_1_XPATH')
 
     @classmethod
     def validate(cls):
@@ -40,6 +44,10 @@ class Config:
             'LOGO_SAUSLABS_XPATH': cls.LOGO_SAUSELABS_XPATH,
             'LOGOUT_BUTTON_XPATH': cls.LOGOUT_BUTTON_XPATH,
             'LOGO_PAGE_XPATH': cls.LOGO_PAGE_XPATH,
+            'CLOSE_MENU_BUTTON_XPATH': cls.CLOSE_MENU_BUTTON_XPATH,
+            'PRODUCT_SORT_DROPDOWN_XPATH': cls.PRODUCT_SORT_DROPDOWN,
+            'ADD_TO_CART_BTN_XPATH': cls.ADD_TO_CART_BTN,
+            'NOTIFICATION_1_XPATH': cls.NOTIFICATION_1
         }
 
         for var_name, var_value in variables.items():

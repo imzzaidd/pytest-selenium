@@ -39,5 +39,30 @@ class TestInventoryView:
         inventory_page.click_element(Config.MENU_BUTTON_XPATH)
         inventory_page.click_element(Config.LOGOUT_BUTTON_XPATH)
         inventory_page.is_element_visible(Config.USERNAME_INPUT_XPATH), "Logout failed"
+        test_login_success(browser)
+        inventory_page.is_element_visible(Config.MENU_BUTTON_XPATH)
+        inventory_page.click_element(Config.MENU_BUTTON_XPATH)
+        inventory_page.click_element(Config.CLOSE_MENU_BUTTON_XPATH)
+        inventory_page.is_element_visible(Config.PRODUCT_SORT_DROPDOWN)
+        inventory_page.select_by_value(Config.PRODUCT_SORT_DROPDOWN, 'az')
 
+    def test_product_sort(self, browser):
+        """
+        Test de ordenamiento de productos
+        """
+        inventory_page = InventoryView(browser)
+        test_login_success(browser)
+        inventory_page.select_by_value(Config.PRODUCT_SORT_DROPDOWN, 'az')
+        inventory_page.select_by_value(Config.PRODUCT_SORT_DROPDOWN, 'za')
+        inventory_page.select_by_value(Config.PRODUCT_SORT_DROPDOWN, 'lohi')
+        inventory_page.select_by_value(Config.PRODUCT_SORT_DROPDOWN, 'hilo')
+        
+    def test_add_to_cart(self, browser):
+        """
+        Test de agregar al carrito
+        """
+        inventory_page = InventoryView(browser)
+        test_login_success(browser)
+        inventory_page.click_element(Config.ADD_TO_CART_BTN)
+        inventory_page.is_element_visible(Config.NOTIFICATION_1)
         

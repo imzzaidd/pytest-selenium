@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from config.config import Config
+from selenium.webdriver.support.ui import Select
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -66,19 +67,16 @@ class InventoryView:
         self.driver.back()
         logger.info("Go back to previous page")
 
-    def index_view(self, username, password):
-        self.load_page()
-        self.fill_input(Config.USERNAME_INPUT_XPATH, username)
-        self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
-        self.click_element(Config.SUBMIT_BUTTON_XPATH)
-        self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
+    def select_by_value(self, xpath, value):
+        try:
+            select = Select(self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath))))
+            select.select_by_value(value)
+            logger.info(f"Selected {value} from dropdown {xpath}")
+        except Exception as e:
+            logger.error(f"Error selecting {value} from dropdown {xpath}.", exc_info=True)
+            raise e
+
+    
+
+    
         
-    def hamburger_menu(self, username, password):
-        self.index_view(username, password) 
-        self.click_element(Config.MENU_BUTTON_XPATH)
-        self.click_element(Config.ABOUT_LINK)
-        self.is_element_visible(Config.LOGO_SAUSELABS_XPATH)
-        self.go_back()
-        self.click_element(Config.MENU_BUTTON_XPATH)
-        self.click_element(Config.LOGOUT_BUTTON_XPATH)
-        self.is_element_visible(Config.LOGO_PAGE_XPATH)
