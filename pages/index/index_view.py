@@ -4,27 +4,27 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from config.config import Config
+from selenium.webdriver.support.ui import Select
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class Login2View:
+class InventoryView:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
     def load_page(self):
-        """Load the login page and maximize the window."""
+        
         try:
-            self.driver.get(Config.LOGIN_URL)
+            self.driver.get(Config.LOGIN_SAUCEDEMO_URL)
             self.driver.maximize_window()
-            logger.info("Login page loaded successfully.")
+            logger.info("Login page cargada con éxito.")
         except Exception as e:
             logger.error("Failed to load login page.", exc_info=True)
             raise e
 
     def fill_input(self, xpath, value):
-        """Fill input field located by the given xpath with the specified value."""
         try:
             input_field = self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
             input_field.clear()
@@ -38,7 +38,6 @@ class Login2View:
             raise e
 
     def click_element(self, xpath):
-        """Click the element located by the given xpath."""
         try:
             element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
             element.click()
@@ -51,7 +50,6 @@ class Login2View:
             raise e
 
     def is_element_visible(self, xpath):
-        """Check if the element located by the given xpath is visible."""
         try:
             self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
             logger.info(f"Element {xpath} is visible.")
@@ -65,11 +63,20 @@ class Login2View:
         except Exception as e:
             logger.error(f"Error checking visibility of element {xpath}.", exc_info=True)
             raise e
+    def go_back(self):
+        self.driver.back()
+        logger.info("Go back to previous page")
 
-    def login(self, username, password):
-        """Perform the login action and verify success."""
-        self.load_page()
-        self.fill_input(Config.USERNAME_INPUT_XPATH, username)
-        self.fill_input(Config.PASSWORD_INPUT_XPATH, password)
-        self.click_element(Config.SUBMIT_BUTTON_XPATH)
-        return self.is_element_visible(Config.PRODUCTS_HEADER_XPATH)
+    def select_by_value(self, xpath, value):
+        try:
+            select = Select(self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath))))
+            select.select_by_value(value)
+            logger.info(f"Selected {value} from dropdown {xpath}")
+        except Exception as e:
+            logger.error(f"Error selecting {value} from dropdown {xpath}.", exc_info=True)
+            raise e
+
+    
+
+    
+        

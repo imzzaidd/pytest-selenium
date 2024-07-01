@@ -4,29 +4,54 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    LOGIN_URL = os.getenv('LOGIN_URL2')  # Corrección aquí
-    USERNAME_INPUT_XPATH = os.getenv('USERNAME_INPUT_XPATH2')
-    PASSWORD_INPUT_XPATH = os.getenv('PASSWORD_INPUT_XPATH2')
-    SUBMIT_BUTTON_XPATH = os.getenv('SUBMIT_BUTTON_XPATH2')
+    LOGIN_SAUCEDEMO_URL = os.getenv('LOGIN_SAUCEDEMO_URL')
+    USERNAME_INPUT_XPATH = os.getenv('USERNAME_INPUT_XPATH')
+    PASSWORD_INPUT_XPATH = os.getenv('PASSWORD_INPUT_XPATH')
+    SUBMIT_BUTTON_XPATH = os.getenv('SUBMIT_BUTTON_XPATH')
     PRODUCTS_HEADER_XPATH = os.getenv('PRODUCTS_HEADER_XPATH')
-    USERNAME = os.getenv('USERNAME2')
-    PASSWORD = os.getenv('PASSWORD2')
-    
+    USERNAME = os.getenv('USERNAME')
+    PASSWORD = os.getenv('PASSWORD')
+    INVALID_USERNAME = os.getenv('INVALID_USERNAME')
+    INVALID_PASSWORD = os.getenv('INVALID_PASSWORD')
+    INVALID_MESSAGE_XPATH = os.getenv('INVALID_MESSAGE_XPATH')
+    EMPTY_MESSAGE_XPATH= os.getenv('EMPTY_MESSAGE_XPATH')
+    MENU_BUTTON_XPATH = os.getenv('MENU_BUTTON_XPATH')
+    ABOUT_LINK= os.getenv('ABOUT_LINK_XPATH')
+    LOGO_SAUSELABS_XPATH = os.getenv('LOGO_SAUSLABS_XPATH')
+    LOGOUT_BUTTON_XPATH = os.getenv('LOGOUT_BUTTON_XPATH')
+    LOGO_PAGE_XPATH = os.getenv('LOGO_PAGE_XPATH')
+    CLOSE_MENU_BUTTON_XPATH = os.getenv('CLOSE_MENU_BUTTON_XPATH')
+    PRODUCT_SORT_DROPDOWN= os.getenv('PRODUCT_SORT_DROPDOWN_XPATH')
+    ADD_TO_CART_BTN = os.getenv('ADD_TO_CART_BTN_XPATH')
+    NOTIFICATION_1 = os.getenv('NOTIFICATION_1_XPATH')
+
     @classmethod
     def validate(cls):
         variables = {
-            'LOGIN_URL2': cls.LOGIN_URL,
-            'USERNAME_INPUT_XPATH2': cls.USERNAME_INPUT_XPATH,
-            'PASSWORD_INPUT_XPATH2': cls.PASSWORD_INPUT_XPATH,
-            'SUBMIT_BUTTON_XPATH2': cls.SUBMIT_BUTTON_XPATH,
+            'LOGIN_SAUCEDEMO_URL': cls.LOGIN_SAUCEDEMO_URL,
+            'USERNAME_INPUT_XPATH': cls.USERNAME_INPUT_XPATH,
+            'PASSWORD_INPUT_XPATH': cls.PASSWORD_INPUT_XPATH,
+            'SUBMIT_BUTTON_XPATH': cls.SUBMIT_BUTTON_XPATH,
             'PRODUCTS_HEADER_XPATH': cls.PRODUCTS_HEADER_XPATH,
-            'USERNAME2': cls.USERNAME,
-            'PASSWORD2': cls.PASSWORD,
+            'USERNAME': cls.USERNAME,
+            'PASSWORD': cls.PASSWORD,
+            'INVALID_USERNAME': cls.INVALID_USERNAME,
+            'INVALID_PASSWORD': cls.INVALID_PASSWORD,
+            'ERROR_MESSAGE_XPATH': cls.INVALID_MESSAGE_XPATH,
+            'EMPTY_FIELD_ERROR_MESSAGE_XPATH': cls.EMPTY_MESSAGE_XPATH,
+            'MENU_BUTTON_XPATH': cls.MENU_BUTTON_XPATH,
+            'ABOUT_LINK_XPATH': cls.ABOUT_LINK,
+            'LOGO_SAUSLABS_XPATH': cls.LOGO_SAUSELABS_XPATH,
+            'LOGOUT_BUTTON_XPATH': cls.LOGOUT_BUTTON_XPATH,
+            'LOGO_PAGE_XPATH': cls.LOGO_PAGE_XPATH,
+            'CLOSE_MENU_BUTTON_XPATH': cls.CLOSE_MENU_BUTTON_XPATH,
+            'PRODUCT_SORT_DROPDOWN_XPATH': cls.PRODUCT_SORT_DROPDOWN,
+            'ADD_TO_CART_BTN_XPATH': cls.ADD_TO_CART_BTN,
+            'NOTIFICATION_1_XPATH': cls.NOTIFICATION_1
         }
-        
+
         for var_name, var_value in variables.items():
             if var_value is None:
                 raise ValueError(f"Environment variable {var_name} is not set.")
 
-# Validate configuration at the import time
 Config.validate()
